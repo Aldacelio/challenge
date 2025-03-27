@@ -24,22 +24,25 @@ public class Scraper {
 
     private static final String URL_FILES = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos";
     private static final String DOWNLOAD_DIR = "downloads/";
+    private static final String ZIP_FILE = DOWNLOAD_DIR + "anexos.zip";
 
     public static void main(String[] args) {
         try {
             new File(DOWNLOAD_DIR).mkdirs();
             List<String> pdfFiles = downloadAnexos();
+            
             if (!pdfFiles.isEmpty()) {
-                createZip(pdfFiles);
-                System.out.println("Processo concluído!");
+                if (continueZip()) {
+                    createZip(pdfFiles);
+                    System.out.println("Processo concluído!");
+                } else {
+                    System.out.println("Criação do ZIP cancelada pelo usuário");
+                }
             } else {
-                System.out.println("Download cancelado pelo usuário");
+                System.out.println("Nenhum arquivo foi baixado");
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null,
-                    "Erro: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+            showError("Erro: " + e.getMessage());
         }
     }
 
@@ -54,14 +57,9 @@ public class Scraper {
 
             if (fileName.contains("Anexo I") || fileName.contains("Anexo II")) {
                 File targetFile = new File(fileName);
-
+                
                 if (targetFile.exists()) {
-                    int resposta = JOptionPane.showConfirmDialog(null,
-                            "O arquivo " + targetFile.getName() + " já existe. Deseja substituir?",
-                            "Arquivo existente",
-                            JOptionPane.YES_NO_OPTION);
-
-                    if (resposta != JOptionPane.YES_OPTION) {
+                    if (!confirm("O arquivo " + targetFile.getName() + " já existe. Deseja substituir?")) {
                         continue;
                     }
                 }
@@ -76,13 +74,36 @@ public class Scraper {
         return downloadedFiles;
     }
 
+    private static boolean continueZip() {
+        File zipFile = new File(ZIP_FILE);
+        if (zipFile.exists()) {
+            return confirm("O arquivo " + zipFile.getName() + " já existe. Deseja substituir?");
+        }
+        return true;
+    }
+
     private static void createZip(List<String> files) throws IOException {
-        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("downloads/anexos.zip"))) {
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(ZIP_FILE))) {
             for (String file : files) {
                 zipOut.putNextEntry(new ZipEntry(new File(file).getName()));
                 Files.copy(Paths.get(file), zipOut);
             }
         }
+    }
+
+    private static boolean confirm(String message) {
+        int response = JOptionPane.showConfirmDialog(null, 
+            message, 
+            "Confirmação", 
+            JOptionPane.YES_NO_OPTION);
+        return response == JOptionPane.YES_OPTION;
+    }
+
+    private static void showError(String message) {
+        JOptionPane.showMessageDialog(null, 
+            message, 
+            "Erro", 
+            JOptionPane.ERROR_MESSAGE);
     }
 
 }
