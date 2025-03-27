@@ -1,6 +1,7 @@
 package com.br.intuitivecare.webscraping;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -8,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,7 +25,8 @@ public class Scraper {
     public static void main(String[] args) {
         try {
             new File(DOWNLOAD_DIR).mkdirs();
-            downloadAnexos();
+            List<String> pdfFiles = downloadAnexos();
+            createZip(pdfFiles);
             System.out.println("Processo concluído!");
         } catch (IOException e) {
             System.err.println("Erro: " + e.getMessage());
@@ -48,5 +52,14 @@ public class Scraper {
         }
         return downloadedFiles;
     }
+
+    private static void createZip(List<String> files) throws IOException {
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("downloads/anexos.zip"))) {
+            for (String file : files) {
+                zipOut.putNextEntry(new ZipEntry(new File(file).getName()));
+                Files.copy(Paths.get(file), zipOut);
+            }
+        }
+    }    
 
 }
