@@ -30,16 +30,16 @@ public class Scraper {
         try {
             new File(DOWNLOAD_DIR).mkdirs();
             List<String> pdfFiles = downloadAnexos();
-            
-            if (!pdfFiles.isEmpty()) {
-                if (continueZip()) {
+
+            if (continueZip()) {
+                if (!pdfFiles.isEmpty()) {
                     createZip(pdfFiles);
-                    System.out.println("Processo concluído!");
+                    showMessage("Processo concluído!", "Sucesso");
                 } else {
-                    System.out.println("Criação do ZIP cancelada pelo usuário");
+                    showMessage("Nenhum arquivo foi baixado, mas o ZIP foi substituído", "Informação");
                 }
             } else {
-                System.out.println("Nenhum arquivo foi baixado");
+                showMessage("Criação do ZIP cancelada pelo usuário", "Operação cancelada");
             }
         } catch (IOException e) {
             showError("Erro: " + e.getMessage());
@@ -64,7 +64,7 @@ public class Scraper {
                     }
                 }
 
-                System.out.println((targetFile.exists() ? "Substituindo: " : "Baixando: ") + fileName);
+                showMessage((targetFile.exists() ? "Substituindo: " : "Baixando: ") + fileName, "Download");
                 try (InputStream in = new URL(pdfUrl).openStream()) {
                     Files.copy(in, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     downloadedFiles.add(fileName);
@@ -104,6 +104,13 @@ public class Scraper {
             message, 
             "Erro", 
             JOptionPane.ERROR_MESSAGE);
+    }
+
+    private static void showMessage(String message, String title) {
+        JOptionPane.showMessageDialog(null,
+                message,
+                title,
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
