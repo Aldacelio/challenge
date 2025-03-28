@@ -3,7 +3,8 @@ package com.br.intuitivecare.webscraping.services;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -63,8 +64,10 @@ public class DownloadFiles {
         String action = targetFile.exists() ? "Substituindo: " : "Baixando: ";
         ProgressDialog.show(action + targetFile.getName(), "Progresso do Download");
 
-        try (InputStream in = new URL(pdfUrl).openStream()) {
+        try (InputStream in = new URI(pdfUrl).toURL().openStream()) {
             Files.copy(in, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (URISyntaxException e) {
+            throw new IOException("URL inválida: " + pdfUrl, e);
         } finally {
             ProgressDialog.close("Progresso do Download");
         }

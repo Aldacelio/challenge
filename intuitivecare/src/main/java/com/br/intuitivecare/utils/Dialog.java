@@ -4,6 +4,10 @@ import javax.swing.JOptionPane;
 
 public class Dialog {
 
+    private Dialog() {
+        throw new UnsupportedOperationException("Evitando que a Classe seja instanciada");
+    }
+
     public static boolean confirm(String message) {
         int response = JOptionPane.showConfirmDialog(null,
                 formatMessage(message),
