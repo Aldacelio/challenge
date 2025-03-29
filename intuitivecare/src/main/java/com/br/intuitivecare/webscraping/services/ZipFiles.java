@@ -9,12 +9,17 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.br.intuitivecare.utils.ConfigManager;
 import com.br.intuitivecare.utils.Dialog;
 import com.br.intuitivecare.utils.ProgressDialog;
 
 public class ZipFiles {
 
-    private static final String ZIP_FILE = "downloads/anexos.zip";
+    private final String ZIP_FILE;
+
+    public ZipFiles() {
+        this.ZIP_FILE = ConfigManager.get("scraping.zip.file");
+    }
 
     public void createZip(List<String> files) throws IOException {
         if (new File(ZIP_FILE).exists()

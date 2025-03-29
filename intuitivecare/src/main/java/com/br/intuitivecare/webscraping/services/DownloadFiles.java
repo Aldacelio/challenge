@@ -15,16 +15,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.br.intuitivecare.utils.ConfigManager;
 import com.br.intuitivecare.utils.Dialog;
 import com.br.intuitivecare.utils.ProgressDialog;
 
 public class DownloadFiles {
 
-    private static final String URL_FILES = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos";
-    private static final String DOWNLOAD_DIR = "downloads/";
+    private final String URL_FILES;
+    private final String DOWNLOAD_DIR;
 
     public DownloadFiles() {
-        downloadDirExists();
+        this.URL_FILES = ConfigManager.get("scraping.source.url");
+        this.DOWNLOAD_DIR = ConfigManager.get("scraping.download.dir");
+        this.downloadDirExists();
     }
 
     private void downloadDirExists() {
