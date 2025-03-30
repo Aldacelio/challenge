@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.br.intuitivecare.utils.ConfigManager;
+import com.br.intuitivecare.utils.FileUtils;
 import com.br.intuitivecare.utils.ZipFiles;
 
 public class DownloadFilesTest {
@@ -24,7 +25,7 @@ public class DownloadFilesTest {
 
     @BeforeClass
     public static void setUpClass() throws IOException {
-        DownloadFiles.setTestMode(true); 
+        FileUtils.setTestMode(true); 
         ConfigManager.setProperty("scraping.download.dir", TEST_DIR);
         ConfigManager.setProperty("scraping.zip.file", TEST_DIR + "anexos.zip");
         
