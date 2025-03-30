@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.br.intuitivecare.utils.ConfigManager;
+import com.br.intuitivecare.utils.ZipFiles;
 
 public class DownloadFilesTest {
     
@@ -47,7 +48,7 @@ public class DownloadFilesTest {
 
     @Test
     public void testCreateZip() throws IOException {
-        zipper.createZip(downloadedFiles);
+        zipper.createZip(downloadedFiles, zipFile);
         
         File zipFileObj = new File(zipFile);
         assertTrue("Arquivo ZIP deve existir", zipFileObj.exists());

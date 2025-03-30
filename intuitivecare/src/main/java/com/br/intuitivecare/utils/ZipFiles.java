@@ -1,4 +1,4 @@
-package com.br.intuitivecare.webscraping.services;
+package com.br.intuitivecare.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,19 +9,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.br.intuitivecare.utils.ConfigManager;
-import com.br.intuitivecare.utils.Dialog;
-import com.br.intuitivecare.utils.ProgressDialog;
-
 public class ZipFiles {
 
-    private final String ZIP_FILE;
-
-    public ZipFiles() {
-        this.ZIP_FILE = ConfigManager.get("scraping.zip.file");
-    }
-
-    public void createZip(List<String> files) throws IOException {
+    public void createZip(List<String> files, String ZIP_FILE) throws IOException {
         if (new File(ZIP_FILE).exists()
                 && !Dialog.confirm("O arquivo ZIP já existe. Deseja substituir?")) {
             return;
