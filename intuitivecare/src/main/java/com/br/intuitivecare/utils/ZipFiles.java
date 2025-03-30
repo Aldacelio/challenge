@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.br.intuitivecare.utils.ui.Dialog;
+import com.br.intuitivecare.utils.ui.ProgressDialog;
+
 public class ZipFiles {
 
     public void createZip(List<String> files, String ZIP_FILE) throws IOException {

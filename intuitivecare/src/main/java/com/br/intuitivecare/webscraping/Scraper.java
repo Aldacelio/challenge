@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import com.br.intuitivecare.utils.ConfigManager;
-import com.br.intuitivecare.utils.Dialog;
 import com.br.intuitivecare.utils.ZipFiles;
+import com.br.intuitivecare.utils.ui.Dialog;
 import com.br.intuitivecare.webscraping.services.DownloadFiles;
 
 public class Scraper {

@@ -1,4 +1,4 @@
-package com.br.intuitivecare.utils;
+package com.br.intuitivecare.utils.ui;
 
 import javax.swing.JOptionPane;
 
