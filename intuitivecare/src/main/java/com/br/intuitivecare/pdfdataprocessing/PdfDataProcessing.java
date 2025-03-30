@@ -65,7 +65,7 @@ public class PdfDataProcessing {
         }
     }
 
-    private static void replaceColumnAbbreviations(List<String[]> tableData) {
+    public static void replaceColumnAbbreviations(List<String[]> tableData) {
         for (String[] row : tableData) {
             for (int i = 0; i < row.length; i++) {
                 if (row[i] != null) {
