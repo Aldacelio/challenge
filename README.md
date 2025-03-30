@@ -58,7 +58,7 @@ mvn test
 
 ## Objetivo
 
-Extrair tabelas do PDF baixado (Anexos I) e convertê-las para CSV, realizando as seguintes operações:
+Extrair tabela do PDF baixado (Anexos I) e convertê-la para CSV, realizando as seguintes operações:
 
 - Leitura do arquivo PDF
 - Extração das tabelas
@@ -83,7 +83,7 @@ Extrair tabelas do PDF baixado (Anexos I) e convertê-las para CSV, realizando a
 2. **Execute o processamento do PDF**:
 
    ```bash
-   mvn clean compile exec:java -Dexec.mainClass="com.br.intuitivecare.pdfdataprocessing.PDFProcessor"
+   mvn clean compile exec:java -Dexec.mainClass="com.br.intuitivecare.pdfdataprocessing.PdfDataProcessing"
    ```
 
 3. **Saída esperada**:
