@@ -29,3 +29,27 @@ Baixar automaticamente os Anexos I e II em PDF do [portal da ANS](https://www.go
 
 - Pasta downloads com os PDFs baixados.
 - Arquivo anexos.zip dentro de downloads.
+
+## Testes Unitários
+
+O projeto conta com testes automatizados que verificam:
+
+- Download dos anexos
+- Criação do arquivo ZIP
+- Criação do diretório de downloads
+
+### Como Executar os Testes
+
+Execute o comando:
+
+```bash
+mvn test
+```
+
+### O que é Testado
+
+- `testDownloadAnexos`: Verifica se os anexos são baixados corretamente
+- `testCreateZip`: Verifica se o arquivo ZIP é criado com sucesso
+- `testDownloadDirCreation`: Verifica se o diretório de downloads é criado
+
+**Observação**: Os testes fazem download real dos arquivos apenas uma vez e limpam todos os arquivos após a execução.
