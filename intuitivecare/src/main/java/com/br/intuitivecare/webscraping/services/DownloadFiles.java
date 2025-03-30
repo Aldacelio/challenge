@@ -44,7 +44,7 @@ public class DownloadFiles {
 
         for (Element link : pdfLinks) {
             String pdfUrl = link.attr("abs:href");
-            String fileName = DOWNLOAD_DIR + link.text().trim() + ".pdf";
+            String fileName = DOWNLOAD_DIR + link.text().trim() + "pdf";
 
             if (fileName.contains("Anexo I") || fileName.contains("Anexo II")) {
                 File targetFile = new File(fileName);
