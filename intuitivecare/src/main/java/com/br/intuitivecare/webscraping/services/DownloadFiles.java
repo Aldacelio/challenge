@@ -23,6 +23,7 @@ public class DownloadFiles {
 
     private final String URL_FILES;
     private final String DOWNLOAD_DIR;
+    private static boolean isTestMode = false;
 
     public DownloadFiles() {
         this.URL_FILES = ConfigManager.get("scraping.source.url");
@@ -59,8 +60,15 @@ public class DownloadFiles {
     }
 
     private boolean shouldDownload(File targetFile) {
+        if (isTestMode) {
+            return true;
+        }
         return !targetFile.exists()
                 || Dialog.confirm("O arquivo " + targetFile.getName() + " já existe. Deseja substituir?");
+    }
+
+    public static void setTestMode(boolean testMode) {
+        isTestMode = testMode;
     }
 
     private void downloadFile(String pdfUrl, File targetFile) throws IOException {

@@ -11,20 +11,25 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.br.intuitivecare.utils.ConfigManager;
+
 public class DownloadFilesTest {
     
     private static DownloadFiles downloader;
     private static ZipFiles zipper;
-    private static String downloadDir;
+    private static String TEST_DIR = "test-downloads/";
     private static String zipFile;
     private static List<String> downloadedFiles;
 
     @BeforeClass
     public static void setUpClass() throws IOException {
+        DownloadFiles.setTestMode(true); 
+        ConfigManager.setProperty("scraping.download.dir", TEST_DIR);
+        ConfigManager.setProperty("scraping.zip.file", TEST_DIR + "anexos.zip");
+        
         downloader = new DownloadFiles();
         zipper = new ZipFiles();
-        downloadDir = "downloads/";
-        zipFile = "downloads/anexos.zip";
+        zipFile = TEST_DIR + "anexos.zip";
         downloadedFiles = downloader.downloadAnexos();
     }
 
@@ -51,14 +56,14 @@ public class DownloadFilesTest {
 
     @Test
     public void testDownloadDirCreation() {
-        File dir = new File(downloadDir);
+        File dir = new File(TEST_DIR);
         assertTrue("Diretório de downloads deve existir", dir.exists());
         assertTrue("Path deve ser um diretório", dir.isDirectory());
     }
 
     @AfterClass
     public static void tearDownClass() {
-        File dir = new File(downloadDir);
+        File dir = new File(TEST_DIR);
         if (dir.exists()) {
             File[] files = dir.listFiles();
             if (files != null) {
