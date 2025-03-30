@@ -3,10 +3,14 @@ package com.br.intuitivecare.pdfdataprocessing;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.br.intuitivecare.pdfdataprocessing.services.CsvWriter;
 import com.br.intuitivecare.pdfdataprocessing.services.PdfProcessor;
 import com.br.intuitivecare.utils.ConfigManager;
+import com.br.intuitivecare.utils.FileUtils;
+import com.br.intuitivecare.utils.ZipFiles;
 import com.br.intuitivecare.utils.ui.Dialog;
 import com.br.intuitivecare.utils.ui.ProgressDialog;
 
@@ -16,6 +20,7 @@ public class PdfDataProcessing {
 
         String pdfPath = Paths.get("downloads/Anexo I.pdf").toString();
         String outputDir = ConfigManager.get("pdfprocessing.csv.dir");
+        String baseName = "Teste_" + FileUtils.extractName(pdfPath);
         
         try {
             Files.createDirectories(Paths.get(outputDir));
@@ -23,6 +28,9 @@ public class PdfDataProcessing {
             Dialog.showError("Erro ao criar diretório de saída: " + outputDir);
             return;
         }
+        
+        String csvPath = Paths.get(outputDir, baseName + ".csv").toString();
+        String zipPath = Paths.get(outputDir, baseName + ".zip").toString();
 
         try {
             if (!Files.exists(Paths.get(pdfPath))) {
@@ -36,6 +44,20 @@ public class PdfDataProcessing {
             ProgressDialog.close("Processando Anexo I");
 
             replaceColumnAbbreviations(tableData);
+
+            ProgressDialog.show("Gerando arquivo CSV...", "Salvando Dados");
+            CsvWriter csvWriter = new CsvWriter();
+            csvWriter.writeToCsv(tableData, csvPath);
+            ProgressDialog.close("Salvando Dados");
+
+            List<String> filesToZip = new ArrayList<>();
+            filesToZip.add(csvPath);
+            new ZipFiles().createZip(filesToZip, zipPath);
+
+            Dialog.showMessage(
+                    "Processo concluído! Arquivo ZIP gerado em: " + zipPath,
+                    "Sucesso"
+            );
 
         } catch (IOException e) {
             Dialog.showError("Erro durante o processamento: " + e.getMessage());
