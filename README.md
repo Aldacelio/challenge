@@ -53,3 +53,65 @@ mvn test
 - `testDownloadDirCreation`: Verifica se o diretório de downloads é criado
 
 **Observação**: Os testes fazem download real dos arquivos apenas uma vez e limpam todos os arquivos após a execução.
+
+# Teste de Transformação de dados
+
+## Objetivo
+
+Extrair tabelas do PDF baixado (Anexos I) e convertê-las para CSV, realizando as seguintes operações:
+
+- Leitura do arquivo PDF
+- Extração das tabelas
+- Conversão para formato CSV
+- Limpeza e formatação dos dados
+
+## Pré-requisitos
+
+- Java 23
+- Maven 3.9.9
+- PDFs dos Anexos I e II (gerados pelo teste de Web Scraping)
+
+## Como Executar
+
+1. **Certifique-se que o PDF esta baixado**:
+
+   ```bash
+   cd challenge/intuitive-care
+   mvn clean compile exec:java -Dexec.mainClass="com.br.intuitivecare.webscraping.Scraper"
+   ```
+
+2. **Execute o processamento do PDF**:
+
+   ```bash
+   mvn clean compile exec:java -Dexec.mainClass="com.br.intuitivecare.pdfdataprocessing.PDFProcessor"
+   ```
+
+3. **Saída esperada**:
+
+- Arquivos CSV correspondentes à tabela extraída na pasta 'csvDir'
+
+## Testes Unitários
+
+O projeto inclui testes automatizados que verificam:
+
+- Extração de tabela do PDF
+- Conversão para CSV
+- Limpeza e formatação dos dados
+- Criação do diretório de saída
+
+### Como Executar os Testes
+
+Execute o comando:
+
+```bash
+mvn test
+```
+
+### O que é Testado
+
+- `testPDFExtraction`: Verifica se a tabela é extraída corretamente do PDF
+- `testCSVConversion`: Verifica se a conversão para CSV é realizada com sucesso
+- `testDataCleaning`: Verifica se a limpeza e formatação dos dados está correta
+- `testOutputDirCreation`: Verifica se o diretório de saída é criado adequadamente
+
+**Observação**: Os testes necessitam do arquivo PDF previamente baixado e limpam os arquivos CSV gerados após a execução.
