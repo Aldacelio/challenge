@@ -49,7 +49,7 @@ public class DownloadFiles {
             if (fileName.contains("Anexo I") || fileName.contains("Anexo II")) {
                 File targetFile = new File(fileName);
 
-                if (FileUtils.shouldDownload(targetFile)) {
+                if (FileUtils.shouldProcess(targetFile)) {
                     downloadFile(pdfUrl, targetFile);
                     downloadedFiles.add(fileName);
                 }
