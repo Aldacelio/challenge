@@ -42,3 +42,6 @@ Thumbs.db
 ### Diretórios Temporários ###
 downloads/ 
 csvDir/
+
+### Credencias do banco de dados ###
+.env
