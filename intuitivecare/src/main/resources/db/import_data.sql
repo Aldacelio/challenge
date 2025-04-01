@@ -1,3 +1,4 @@
+TRUNCATE TABLE demonstracoes_contabeis, operadoras CASCADE;
 CREATE OR REPLACE FUNCTION import_operadoras(base_path TEXT) RETURNS INTEGER AS $$
 DECLARE
     file_path TEXT;
