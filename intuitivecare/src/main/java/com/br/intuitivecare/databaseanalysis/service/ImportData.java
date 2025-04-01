@@ -4,10 +4,14 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.Duration;
 import java.time.Instant;
 
+import javax.swing.JOptionPane;
+
 import com.br.intuitivecare.databaseanalysis.util.ScriptExecute;
+import com.br.intuitivecare.databaseanalysis.util.CheckExist;
 import com.br.intuitivecare.utils.ui.Dialog;
 import com.br.intuitivecare.utils.ui.ProgressDialog;
 
@@ -17,6 +21,18 @@ public class ImportData {
     private static final String DATA_PATH = "src/main/resources/data";
 
     public void executeImport(Connection conn) throws Exception {
+        if (!CheckExist.tables(conn)) {
+            boolean choice = Dialog.confirm(
+                "As tabelas não existem. Deseja criá-las primeiro?"
+            );
+            
+            if (choice) {
+                new CreateTable().create(conn);
+            } else {
+                return;
+            }
+        }
+
         Instant start = Instant.now();
         String resourcesPath = Paths.get(DATA_PATH).toAbsolutePath().toString().replace("\\", "/");
 

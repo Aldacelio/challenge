@@ -5,15 +5,47 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
 import javax.swing.JOptionPane;
 
+import com.br.intuitivecare.utils.ui.Dialog;
 import com.br.intuitivecare.utils.ui.ProgressDialog;
+import com.br.intuitivecare.databaseanalysis.util.CheckExist;
 
 public class AnalysisData {
 
     private static final String ANALYTICAL_QUERIES_PATH = "src/main/resources/db/analytical_queries.sql";
 
     public void showTopExpenses(Connection conn) throws Exception {
+        if (!CheckExist.tables(conn)) {
+            boolean choice = Dialog.confirm(
+                "As tabelas não existem. Deseja criá-las primeiro?"
+            );
+            
+            if (choice) {
+                new CreateTable().create(conn);
+                choice = Dialog.confirm(
+                    "Tabelas criadas. Deseja importar os dados agora?"
+                );
+                if (choice) {
+                    new ImportData().executeImport(conn);
+                }
+            }
+            return;
+        }
+
+        if (!CheckExist.data(conn)) {
+            boolean choice = Dialog.confirm(
+                "Não há dados nas tabelas. Deseja importar os dados agora?"
+            );
+            
+            if (choice) {
+                new ImportData().executeImport(conn);
+            } else {
+                return;
+            }
+        }
+
         String[] options = {"Último Trimestre", "Último Ano", "Cancelar"};
         int choice = JOptionPane.showOptionDialog(
                 null,
