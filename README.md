@@ -43,7 +43,7 @@ O projeto conta com testes automatizados que verificam:
 Execute o comando:
 
 ```bash
-mvn test
+mvn test -Dtest=DownloadFilesTest
 ```
 
 ### O que é Testado
@@ -104,7 +104,7 @@ O projeto inclui testes automatizados que verificam:
 Execute o comando:
 
 ```bash
-mvn test
+mvn test -Dtest=PdfDataProcessingTest
 ```
 
 ### O que é Testado
@@ -115,3 +115,46 @@ mvn test
 - `testOutputDirCreation`: Verifica se o diretório de saída é criado adequadamente
 
 **Observação**: Os testes necessitam do arquivo PDF previamente baixado e limpam os arquivos CSV gerados após a execução.
+
+# Teste de Banco de dados
+
+## Objetivo
+
+Realizar análise de dados das demonstrações contábeis das operadoras de planos de saúde, com as seguintes funcionalidades:
+
+- Criação de tabelas no banco de dados PostgreSQL
+- Importação de dados das operadoras e demonstrações contábeis
+- Análise das 10 operadoras que mais tiveram despesas com "EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS" no último trimestre e último ano
+
+## Pré-requisitos
+
+- Java 23
+- Maven 3.9.9
+- PostgreSQL 15
+- Banco de dados configurado com as credenciais corretas
+
+## Como Executar
+
+1. **Configure o banco de dados**:
+
+   Certifique-se que o PostgreSQL está rodando e as credenciais estão configuradas corretamente.
+
+2. **Execute a aplicação**:
+
+   ```bash
+   mvn clean compile exec:java -Dexec.mainClass="com.br.intuitivecare.databaseanalysis.DatabaseAnalysis"
+   ```
+
+3. **Funcionalidades disponíveis**:
+
+   - Criar tabelas: Cria as estruturas necessárias no banco de dados
+   - Importar dados: Importa os dados dos CSVs para o banco
+   - Top 10 maiores despesas: Exibe relatório das operadoras com maiores despesas
+
+## Observações
+
+1. **Dados versionados**
+
+   - Sei que não é uma boa prática subir arquivos como os que subi porém foi para facilitar na hora da avaliação
+   - Tempo médio da importação de dados: 5 minutos
+   - Implementei uma limpeza de tabelas para que caso queira executar o teste mais de uma vez, não tenha duplicação de dados
