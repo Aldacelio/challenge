@@ -209,4 +209,4 @@ Desenvolver uma interface web para busca de operadoras de planos de saúde, que 
 - Feedback visual durante carregamento
 
 
-**Observação**: Certifique-se que o backend está rodando na porta 5000 antes de iniciar o frontend e també que o seu frontend está rodando na porta 5173.
+**Observação**: Certifique-se que o backend está rodando na porta 5000 antes de iniciar o frontend e também que o seu frontend está rodando na porta 5173.
