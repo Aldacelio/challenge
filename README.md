@@ -158,3 +158,55 @@ Realizar análise de dados das demonstrações contábeis das operadoras de plan
    - Sei que não é uma boa prática subir arquivos como os que subi porém foi para facilitar na hora da avaliação
    - Tempo médio da importação de dados: 5 minutos
    - Implementei uma limpeza de tabelas para que caso queira executar o teste mais de uma vez, não tenha duplicação de dados
+
+# Teste de API
+
+## Objetivo
+
+Desenvolver uma interface web para busca de operadoras de planos de saúde, que foi implementada com especificações:
+
+- Frontend em Vue.js com Tailwind CSS
+- Backend em Python/Flask
+- Busca por nome da operadora ou registro ANS
+- Paginação dos resultados
+- Tema claro/escuro persistente
+- Cache dos dados no backend
+
+## Pré-requisitos
+
+- Python 3.11+
+- Node.js 18+
+- NPM ou Yarn
+
+## Como Executar
+
+1. **Backend**:
+
+   ```bash
+   cd operatorsearch/backend
+   pip install -r requirements.txt
+   python app.py
+   ```
+
+2. **Frontend**:
+
+   ```bash
+   cd operatorsearch/frontend
+   npm install
+   npm run dev
+   ```
+
+3. **Acesse no navegador**:
+
+   Abra http://localhost:5173
+
+## Funcionalidades
+
+- Busca em tempo real com debounce
+- Paginação dos resultados no backend
+- Tema escuro/claro com persistência
+- Cache de dados para melhor performance
+- Feedback visual durante carregamento
+
+
+**Observação**: Certifique-se que o backend está rodando na porta 5000 antes de iniciar o frontend e també que o seu frontend está rodando na porta 5173.
