@@ -9,7 +9,7 @@ SELECT
 FROM demonstracoes_contabeis dc
 JOIN operadoras o ON dc.reg_ans = o.registro_ans
 WHERE 
-    dc.descricao LIKE 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS%' AND
+    dc.descricao LIKE 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR ' AND
     DATE_TRUNC('quarter', dc.data) = (SELECT trimestre FROM ultimo_trimestre)
 ORDER BY despesa_total DESC
 LIMIT 10;
@@ -25,7 +25,7 @@ SELECT
 FROM demonstracoes_contabeis dc
 JOIN operadoras o ON dc.reg_ans = o.registro_ans
 WHERE 
-    dc.descricao LIKE 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS%' AND
+    dc.descricao LIKE 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR ' AND
     EXTRACT(YEAR FROM dc.data) = (SELECT ano FROM ultimo_ano)
 GROUP BY o.registro_ans, o.razao_social
 ORDER BY despesa_total_anual DESC
