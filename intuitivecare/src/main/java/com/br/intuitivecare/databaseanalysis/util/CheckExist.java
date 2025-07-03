@@ -17,7 +17,7 @@ public class CheckExist {
 
     public static boolean data(Connection conn) throws Exception {
         try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM demonstracoes)");
+            ResultSet rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM demonstracoes_contabeis)");
             rs.next();
             return rs.getBoolean(1);
         }
